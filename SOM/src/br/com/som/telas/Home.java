@@ -103,6 +103,11 @@ public class Home extends javax.swing.JFrame {
 
         menuCadUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
         menuCadUser.setText("Usuários");
+        menuCadUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCadUserActionPerformed(evt);
+            }
+        });
         menuCad.add(menuCadUser);
 
         Menu.add(menuCad);
@@ -172,6 +177,12 @@ public class Home extends javax.swing.JFrame {
         lblDate.setText(data.toString()); 
     
     }//GEN-LAST:event_formWindowActivated
+    // O bloco abaixo abre o form no UserSc dentro da janela Desktop
+    private void menuCadUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadUserActionPerformed
+        UserSc userscreen = new UserSc();
+        userscreen.setVisible(true);
+        Desktop.add(userscreen);
+    }//GEN-LAST:event_menuCadUserActionPerformed
 
     /**
      * @param args the command line arguments
