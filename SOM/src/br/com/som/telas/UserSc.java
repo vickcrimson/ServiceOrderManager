@@ -9,13 +9,33 @@ package br.com.som.telas;
  *
  * @author vickb
  */
+import java.sql.*;
+import br.com.som.dal.ModuloConexao;
+import javax.swing.JOptionPane;
+
+
 public class UserSc extends javax.swing.JInternalFrame {
 
+    Connection conexao = null; // Variavel do modulo de conexão
+    PreparedStatement pst = null; // Manipular instruções SQL
+    ResultSet rs = null; // Exibe os resultados das instruções SQL
     /**
      * Creates new form UserSc
      */
     public UserSc() {
         initComponents();
+        conexao = ModuloConexao.conectar();
+    }
+    
+    private void consultar(){
+        String sql = "select * from usuarios where iduser=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1,txtUsId.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);// caso haja um erro
+            // retorna numa janela
+        }
     }
 
     /**
@@ -39,10 +59,10 @@ public class UserSc extends javax.swing.JInternalFrame {
         cbxUsPerf = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         txtUsFon = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnUsCreate = new javax.swing.JButton();
+        btnUsRead = new javax.swing.JButton();
+        btnUsUpdt = new javax.swing.JButton();
+        btnUsDel = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -103,21 +123,21 @@ public class UserSc extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/create.png"))); // NOI18N
-        jButton1.setToolTipText("Adicionar Usuário");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/create.png"))); // NOI18N
+        btnUsCreate.setToolTipText("Adicionar Usuário");
+        btnUsCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/read.png"))); // NOI18N
-        jButton2.setToolTipText("Consultar Usuários");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsRead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/read.png"))); // NOI18N
+        btnUsRead.setToolTipText("Consultar Usuários");
+        btnUsRead.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/update.png"))); // NOI18N
-        jButton3.setToolTipText("Atualizar ");
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsUpdt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/update.png"))); // NOI18N
+        btnUsUpdt.setToolTipText("Atualizar ");
+        btnUsUpdt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/delete.png"))); // NOI18N
-        jButton4.setToolTipText("Excluir Usuário");
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/delete.png"))); // NOI18N
+        btnUsDel.setToolTipText("Excluir Usuário");
+        btnUsDel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -146,23 +166,23 @@ public class UserSc extends javax.swing.JInternalFrame {
                         .addComponent(txtUsFon, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(54, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
+                .addComponent(btnUsCreate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnUsRead)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnUsUpdt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addComponent(btnUsDel)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnUsCreate)
+                    .addComponent(btnUsRead)
+                    .addComponent(btnUsUpdt)
+                    .addComponent(btnUsDel))
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -216,11 +236,11 @@ public class UserSc extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnUsCreate;
+    private javax.swing.JButton btnUsDel;
+    private javax.swing.JButton btnUsRead;
+    private javax.swing.JButton btnUsUpdt;
     private javax.swing.JComboBox cbxUsPerf;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
