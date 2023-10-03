@@ -32,6 +32,22 @@ public class UserSc extends javax.swing.JInternalFrame {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1,txtUsId.getText());
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                txtUsNome.setText(rs.getString(2));
+                txtUsFon.setText(rs.getString(3));
+                txtUsLog.setText(rs.getString(4));
+                txtUsPsw.setText(rs.getString(5));
+                cbxUsPerf.setSelectedItem(rs.getString(6));
+                
+            } else { 
+                JOptionPane.showMessageDialog(null,"Usuário não encontrado.");
+                txtUsNome.setText(null);
+                txtUsFon.setText(null);
+                txtUsLog.setText(null);
+                txtUsPsw.setText(null);
+                cbxUsPerf.setSelectedItem(null);
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);// caso haja um erro
             // retorna numa janela
@@ -130,6 +146,11 @@ public class UserSc extends javax.swing.JInternalFrame {
         btnUsRead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/read.png"))); // NOI18N
         btnUsRead.setToolTipText("Consultar Usuários");
         btnUsRead.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsRead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsReadActionPerformed(evt);
+            }
+        });
 
         btnUsUpdt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/som/icones/update.png"))); // NOI18N
         btnUsUpdt.setToolTipText("Atualizar ");
@@ -233,6 +254,11 @@ public class UserSc extends javax.swing.JInternalFrame {
     private void txtUsFonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsFonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsFonActionPerformed
+
+    private void btnUsReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsReadActionPerformed
+        // Chamar o met. consultar.
+        consultar();
+    }//GEN-LAST:event_btnUsReadActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
